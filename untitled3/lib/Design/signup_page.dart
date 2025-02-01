@@ -13,7 +13,6 @@ class SignupPage extends StatefulWidget {
 }
 
 class _SignupPageState extends State<SignupPage> {
-  @override
   bool _obsurcureTextAccount = false;
   bool _obsurcureTextPassword = false;
   bool _obsurcureTextAadhaar = false;
@@ -31,30 +30,36 @@ class _SignupPageState extends State<SignupPage> {
         title: Text(
           'SignUp',
           style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.w400,
+            color: Colors.red,
+            fontWeight: FontWeight.w800,
           ),
         ),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
+          padding: EdgeInsets.all(10),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Ink.image(
+                image: AssetImage('assets/vyon.png'),
+                height: 10,
+                width: 10,
+              ),
               Padding(padding: EdgeInsets.all(15)),
               TextField(
                 controller: name,
                 keyboardType: TextInputType.name,
                 decoration: InputDecoration(
-                  hintText: 'Name :',
+                  hintText: 'Name',
                   labelText: 'Name',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
                   filled: true,
-                  fillColor: Colors.grey[300],
+                  fillColor: Colors.white,
                   contentPadding:
-                      EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                  EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                 ),
               ),
               const SizedBox(
@@ -69,7 +74,7 @@ class _SignupPageState extends State<SignupPage> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   filled: true,
-                  fillColor: Colors.grey[300],
+                  fillColor: Colors.white,
                   contentPadding:
                   EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                 ),
@@ -84,7 +89,7 @@ class _SignupPageState extends State<SignupPage> {
                 decoration: InputDecoration(
                   hintText: 'Account Number',
                   labelText: 'Account Number',
-                  icon: IconButton(
+                  suffixIcon: IconButton(
                     icon: Icon(_obsurcureTextAccount
                         ? Icons.visibility
                         : Icons.visibility_off),
@@ -98,9 +103,9 @@ class _SignupPageState extends State<SignupPage> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   filled: true,
-                  fillColor: Colors.grey[300],
+                  fillColor: Colors.white,
                   contentPadding:
-                      EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                  EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                 ),
               ),
               const SizedBox(
@@ -108,7 +113,7 @@ class _SignupPageState extends State<SignupPage> {
               ),
               TextField(
                 controller: ifsc,
-                keyboardType: TextInputType.number,
+                keyboardType: TextInputType.name,
                 decoration: InputDecoration(
                   hintText: 'IFSC Number',
                   labelText: 'IFSC Number',
@@ -116,9 +121,9 @@ class _SignupPageState extends State<SignupPage> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   filled: true,
-                  fillColor: Colors.grey[300],
+                  fillColor: Colors.white,
                   contentPadding:
-                      EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                  EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                 ),
               ),
               const SizedBox(
@@ -134,9 +139,9 @@ class _SignupPageState extends State<SignupPage> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   filled: true,
-                  fillColor: Colors.grey[300],
+                  fillColor: Colors.white,
                   contentPadding:
-                      EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                  EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                 ),
               ),
               const SizedBox(
@@ -149,7 +154,7 @@ class _SignupPageState extends State<SignupPage> {
                 decoration: InputDecoration(
                   hintText: 'Aadhar Number',
                   labelText: 'Aadhar Number',
-                  icon: IconButton(
+                  suffixIcon: IconButton(
                     icon: Icon(_obsurcureTextAadhaar
                         ? Icons.visibility
                         : Icons.visibility_off),
@@ -163,9 +168,9 @@ class _SignupPageState extends State<SignupPage> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   filled: true,
-                  fillColor: Colors.grey[300],
+                  fillColor: Colors.white,
                   contentPadding:
-                      EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                  EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                 ),
               ),
               const SizedBox(
@@ -178,7 +183,7 @@ class _SignupPageState extends State<SignupPage> {
                 decoration: InputDecoration(
                   hintText: 'Password',
                   labelText: 'Password',
-                  icon: IconButton(
+                  suffixIcon: IconButton(
                     icon: Icon(_obsurcureTextPassword
                         ? Icons.visibility
                         : Icons.visibility_off),
@@ -192,9 +197,9 @@ class _SignupPageState extends State<SignupPage> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   filled: true,
-                  fillColor: Colors.grey[300],
+                  fillColor: Colors.white,
                   contentPadding:
-                      EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                  EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                 ),
               ),
               const SizedBox(
@@ -203,28 +208,30 @@ class _SignupPageState extends State<SignupPage> {
               ElevatedButton(
                 onPressed: () async {
                   final map = {
-                    "name":name.text.trim(),
-                    "email":email.text.trim(),
-                    "account":account.text.trim(),
-                    "ifsc":ifsc.text.trim(),
-                    "phone":phone.text.trim(),
-                    "adhare":adhare.text.trim(),
-                    "password":password.text.trim(),
+                    "name": name.text.trim(),
+                    "email": email.text.trim(),
+                    "account": account.text.trim(),
+                    "ifsc": ifsc.text.trim(),
+                    "phone": phone.text.trim(),
+                    "adhare": adhare.text.trim(),
+                    "password": password.text.trim(),
                   };
-                  final res = await Detail().signIn(email.text.trim(), password.text.trim());
-                  if(res==""){
-                    Navigator.pushReplacement(
-                        context, MaterialPageRoute(builder: (context) => HomePage()));
-                  } else{
-
-                  }
+                  final res = await Detail()
+                      .signIn(email.text.trim(), password.text.trim());
+                  if (res == "") {
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context) => HomePage()));
+                  } else {}
                 },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.white,
+                  side: BorderSide(color: Colors.red, width: 2),
+                ),
                 child: Text(
                   'Verification', //<-- verification
                   style: TextStyle(
-                    backgroundColor: Colors.purple[300],
                     color: Colors.black,
-                    fontWeight: FontWeight.w400,
+                    fontWeight: FontWeight.w800,
                   ),
                 ),
               ),

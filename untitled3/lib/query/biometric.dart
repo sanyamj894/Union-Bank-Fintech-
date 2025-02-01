@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:local_auth/local_auth.dart';
 
@@ -27,26 +26,38 @@ class BioMetricAuth{
   }
 
   Future<String> bioMetrics() async {
-    try{
-      final support = await _auth.isDeviceSupported();
-      final available = await _auth.getAvailableBiometrics();
-      final authenticated = await _auth.authenticate(localizedReason: "Face Id Login",options: const AuthenticationOptions(biometricOnly: true));
-      if(support==true){
-        if(available.contains(BiometricType.face)){
-          if(authenticated){
-            return "";
-          }else{
-            return "Failed to Authenticate. Try Again...";
-          }
-        } else {
-          return "Please enable Face biometrics from Setting";
+    try {
+      if(authStatus){
+        print(authStatus);
+        print(user);
+        print(password);
+        final support = await _auth.isDeviceSupported();
+        print("Device supports biometrics: $support");
+
+        final available = await _auth.getAvailableBiometrics();
+        print("Available Biometrics: $available");
+
+        // If Face ID is not available, return a proper message
+        if (!available.contains(BiometricType.strong)) {
+          return "Please enable Face Biometrics in Settings";
         }
+
+        // Proceed with authentication
+        final authenticated = await _auth.authenticate(
+          localizedReason: "Face ID Login",
+          options: const AuthenticationOptions(biometricOnly: true),
+        );
+
+        print("Authentication result: $authenticated");
+
+        return authenticated ? "" : "Failed to Authenticate. Try Again...";
       } else{
-        return "Device not support Face Authentication";
+        return "Please Login first with email ID";
       }
-    } catch(e){
-      return e.toString();
+    } catch (e) {
+      return "Error: ${e.toString()}";
     }
   }
+
 
 }

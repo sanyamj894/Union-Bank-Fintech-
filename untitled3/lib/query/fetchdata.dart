@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:untitled3/query/biometric.dart';
+import 'package:untitled3/query/data.dart';
 
 class Detail{
   Future<String> login(String emailAddress,String password) async {
@@ -11,6 +12,7 @@ class Detail{
       if(!BioMetricAuth.authStatus){
         BioMetricAuth.addAuth(emailAddress, password);
       }
+      Data.visible = true;
       return credential!=null?"":"null";
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
@@ -37,6 +39,7 @@ class Detail{
       if(!BioMetricAuth.authStatus){
         BioMetricAuth.addAuth(emailAddress, password);
       }
+      Data.visible = false;
       return credential!=null?"":"null";
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
